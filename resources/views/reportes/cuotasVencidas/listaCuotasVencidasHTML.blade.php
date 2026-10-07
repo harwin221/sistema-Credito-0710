@@ -22,7 +22,9 @@
     </div>
     <div class="report-wrapper">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Lista de Cuotas Vencidas</div>
             <div class="rpt-meta">Del {{ fecha_d_m_Y($desde) }} al {{ fecha_d_m_Y($hasta) }} &nbsp;|&nbsp; Generado: {{ date('d/m/Y h:i A') }}</div>
@@ -91,17 +93,23 @@
         @endforeach
 
         @if(count($cuotasVencidas) > 0)
-        <table class="data-table" style="margin-top:10px;">
-            <tfoot>
-                <tr class="row-grand-total">
-                    <td colspan="6" class="text-right">TOTAL GENERAL &mdash; {{ count($cuotasVencidas) }} cuota{{ count($cuotasVencidas) != 1 ? 's' : '' }}</td>
-                    <td class="text-right num">C$ {{ number_format($totalCuota, 2) }}</td>
-                    <td class="text-right num">C$ {{ number_format($totalAbonado, 2) }}</td>
-                    <td class="text-right num" style="color:#fca5a5;">C$ {{ number_format($totalPendiente, 2) }}</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="grand-total-block">
+            <div class="gt-title">Totales Generales &mdash; {{ count($cuotasVencidas) }} cuota{{ count($cuotasVencidas) != 1 ? 's' : '' }}</div>
+            <div class="gt-grid">
+                <div class="gt-item">
+                    <div class="gt-label">Monto Cuota</div>
+                    <div class="gt-value dark">C$ {{ number_format($totalCuota, 2) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Abonado</div>
+                    <div class="gt-value" style="color:#15803d;">C$ {{ number_format($totalAbonado, 2) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Pendiente</div>
+                    <div class="gt-value" style="color:#b91c1c;">C$ {{ number_format($totalPendiente, 2) }}</div>
+                </div>
+            </div>
+        </div>
         @endif
         <div class="rpt-footer">Documento generado por CrediNica &mdash; {{ date('d/m/Y h:i A') }} &mdash; Uso interno exclusivo</div>
     </div>

@@ -18,7 +18,9 @@
     </div>
     <div class="report-wrapper">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Préstamos Vencidos</div>
             <div class="rpt-meta">Generado: {{ date('d/m/Y') }} &nbsp;|&nbsp; {{ date('h:i A') }}</div>
@@ -55,8 +57,8 @@
             </tbody>
             @if(count($prestamosVencidos) > 0)
             <tfoot>
-                <tr class="row-grand-total">
-                    <td colspan="4" class="text-right">TOTAL GENERAL &mdash; {{ count($prestamosVencidos) }} préstamo{{ count($prestamosVencidos) != 1 ? 's' : '' }}</td>
+                <tr class="row-subtotal">
+                    <td colspan="4" class="text-right">SUBTOTAL</td>
                     <td class="text-right num">C$ {{ number_format($totalMonto, 2) }}</td>
                     <td class="text-right num">C$ {{ number_format($totalFinanciado, 2) }}</td>
                     <td colspan="4"></td>
@@ -64,6 +66,22 @@
             </tfoot>
             @endif
         </table>
+
+        @if(count($prestamosVencidos) > 0)
+        <div class="grand-total-block">
+            <div class="gt-title">Totales Generales &mdash; {{ count($prestamosVencidos) }} préstamo{{ count($prestamosVencidos) != 1 ? 's' : '' }}</div>
+            <div class="gt-grid">
+                <div class="gt-item">
+                    <div class="gt-label">Total Monto</div>
+                    <div class="gt-value dark">C$ {{ number_format($totalMonto, 2) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Total Financiado</div>
+                    <div class="gt-value">C$ {{ number_format($totalFinanciado, 2) }}</div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <div class="rpt-footer">Documento generado por CrediNica &mdash; {{ date('d/m/Y h:i A') }} &mdash; Uso interno exclusivo</div>
     </div>

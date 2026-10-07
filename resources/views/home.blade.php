@@ -91,25 +91,13 @@
 
     <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <div class="stat-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                <div class="stat-card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
                 <div class="stat-card-body">
                     <div class="stat-icon">
-                        <i class="fa fa-users" style="color: #2c3e50;"></i>
+                        <i class="fa fa-money-bill-wave" style="color: #2c3e50;"></i>
                     </div>
-                    <h6 class="stat-title" style="color: #2c3e50;">Clientes Activos</h6>
-                    <h2 class="stat-number" style="color: #2c3e50;">{{$datos['clientesActivos']}}</h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3 mb-3">
-            <div class="stat-card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
-                <div class="stat-card-body">
-                    <div class="stat-icon">
-                        <i class="fa fa-users" style="color: #2c3e50;"></i>
-                    </div>
-                    <h6 class="stat-title" style="color: #2c3e50;">Clientes | Año</h6>
-                    <h2 class="stat-number" style="color: #2c3e50;">{{$datos['clientesAnyo']}}</h2>
+                    <h6 class="stat-title" style="color: #2c3e50;">Saldo de Cartera Total</h6>
+                    <h2 class="stat-number" style="color: #2c3e50;">C$ {{number_format($datos['saldoCarteraTotal'], 2)}}</h2>
                 </div>
             </div>
         </div>

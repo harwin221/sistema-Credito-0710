@@ -27,7 +27,9 @@
 
     <div class="report-wrapper">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Reporte de Asignación de Clientes</div>
             <div class="rpt-meta">Generado: {{ date('d/m/Y') }} &nbsp;|&nbsp; {{ date('h:i A') }}</div>
@@ -75,14 +77,26 @@
             </tbody>
             @if(count($prestamos) > 0)
             <tfoot>
-                <tr class="row-grand-total">
-                    <td colspan="7" class="text-right">TOTAL FINANCIADO &mdash; {{ count($prestamos) }} préstamo{{ count($prestamos) != 1 ? 's' : '' }}</td>
+                <tr class="row-subtotal">
+                    <td colspan="7" class="text-right">SUBTOTAL &mdash; {{ count($prestamos) }} préstamo{{ count($prestamos) != 1 ? 's' : '' }}</td>
                     <td class="text-right num">C$ {{ number_format($totalFinanciado, 2) }}</td>
                     <td></td>
                 </tr>
             </tfoot>
             @endif
         </table>
+
+        @if(count($prestamos) > 0)
+        <div class="grand-total-block">
+            <div class="gt-title">Total Financiado &mdash; {{ count($prestamos) }} préstamo{{ count($prestamos) != 1 ? 's' : '' }}</div>
+            <div class="gt-grid">
+                <div class="gt-item">
+                    <div class="gt-label">Total Financiado</div>
+                    <div class="gt-value dark">C$ {{ number_format($totalFinanciado, 2) }}</div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <div class="rpt-footer">Documento generado por CrediNica &mdash; {{ date('d/m/Y h:i A') }} &mdash; Uso interno exclusivo</div>
     </div>

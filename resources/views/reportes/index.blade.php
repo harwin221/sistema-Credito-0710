@@ -221,7 +221,7 @@
             </div>
         @endcan
 
-        @can('Cartera Vencida Histórica (17)')
+        @can('Detalle Colocacion V2 (9)')
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-3">
                 <div class="report-card" data-bs-toggle="modal" data-bs-target="#modalCarteraVencidaHistorica" style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);">
                     <div class="report-card-body">

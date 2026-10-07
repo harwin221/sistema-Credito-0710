@@ -33,21 +33,7 @@
                 </div>
             </div>
 
-            <!-- Leyenda en una sola línea completa -->
-            <div class="mt-2 mb-3" style="font-size: 0.8rem; color: #495057;">
-                <i class="fas fa-info-circle me-1" style="color: #1f9cb5;"></i>
-                <strong>N:</strong> Nuevo |
-                <strong>R:</strong> Represtamo |
-                <strong>REAC:</strong> Reactivación |
-                <strong>REEST:</strong> Reestructuración |
-                <span class="badge bg-danger" style="font-size: 0.7rem;">PENDIENTE DESEMBOLSO</span>
-                <span class="mx-2">•</span>
-                <span class="badge" style="background-color: rgba(88,139,216,0.47); color: #000; font-size: 0.7rem;">A: Normal</span>
-                <span class="badge" style="background-color: #96d858; color: #000; font-size: 0.7rem;">B: Potencial</span>
-                <span class="badge" style="background-color: #d8d358; color: #000; font-size: 0.7rem;">C: Real</span>
-                <span class="badge" style="background-color: #d3a065; color: #000; font-size: 0.7rem;">D: Dudosa</span>
-                <span class="badge" style="background-color: #d36565; color: #fff; font-size: 0.7rem;">E: Irrecuperable</span>
-            </div>
+
         </div>
     </div>
     <div class="row">
@@ -56,45 +42,30 @@
                 <table class="table table-stripped table-sm" style="font-size: 14px">
                     <thead class="table-info">
                     <tr>
-                        <th></th>
-                        <th>N° Préstamo</th>
-                        <th>Tipo</th>
-                        <th>Frecuencia</th>
                         <th>Cliente</th>
                         <th>Monto</th>
-                        <th>Fecha Creado</th>
-                        <th>Fecha de Vencimiento</th>
+                        <th>Plazo</th>
+                        <th>Tasa %</th>
                         <th>Agente Asignado</th>
+                        <th>F. Desembolso</th>
+                        <th>F. Vencimiento</th>
                         <th>Estado</th>
-                        <th>Entregado</th>
                         <th>Acción</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($prestamos as $prestamo)
                         <tr @if($prestamo->desembolsado==0 && in_array($prestamo->estado,[1,3])) class="table-danger" @endif>
-                            <td style="background: {{$prestamo->dias_atraso['color']}}">
-                                {{$prestamo->dias_atraso['letra']}}
-                            </td>
-                            <td>
-                                {{$prestamo->consecutivo}}
-                                @if($prestamo->represtamo)
-                                    <a href="javascript:void(0)" class="btn btn-sm btn-info"><i class="fa fa-r text-white" title="Represtamo"></i></a>
-                                @endif
-                            </td>
-                            <td>{{$prestamo->tipo_prestamo_abrev}}</td>
-                            <td>{{$prestamo->forma_pago}}</td>
                             <td>{{$prestamo->cliente->full_name}}</td>
                             <td>{{$prestamo->moneda}} {{number_format($prestamo->monto_prestamo,2)}}</td>
+                            <td class="text-center">{{$prestamo->plazo_pago}}</td>
+                            <td class="text-center">{{$prestamo->tasa_prestamo}}%</td>
+                            <td>{{$prestamo->agente ? $prestamo->agente->username : 'N-D'}}</td>
                             <td>{{fecha_d_m_Y_h_i($prestamo->created_at)}}</td>
                             <td>{{$prestamo->cuotas()->orderBy('id','desc')->first() ? fecha_d_m_Y($prestamo->cuotas()->orderBy('id','desc')->first()->fecha_cuota) : '-'}}</td>
-                            <td>{{$prestamo->agente ? $prestamo->agente->username : 'N-D'}}</td>
                             <td><span class="badge @if($prestamo->estado==1) bg-success @elseif($prestamo->estado == 4) bg-danger @else bg-primary @endif">
                                     {{$prestamo->estado_prestamo}}
                                 </span>
-                            </td>
-                            <td class="text-center">
-                                <span>@if($prestamo->desembolsado==1) <i class="fa fa-check" style="color: green"></i>@else <i class="fa fa-times" style="color: red"></i> @endif</span>
                             </td>
                             <td class="text-center">
                                 @can('Ver Desembolsos')

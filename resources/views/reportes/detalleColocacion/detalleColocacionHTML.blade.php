@@ -22,7 +22,9 @@
     </div>
     <div class="report-wrapper">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Reporte de Recuperación</div>
             <div class="rpt-meta">Del {{ fecha_d_m_Y($desde) }} al {{ fecha_d_m_Y($hasta) }} &nbsp;|&nbsp; Generado: {{ date('d/m/Y h:i A') }}</div>
@@ -62,8 +64,8 @@
                 </tbody>
                 @if(count($resumen) > 0)
                 <tfoot>
-                    <tr class="row-grand-total">
-                        <td colspan="4" class="text-right">TOTAL GENERAL</td>
+                    <tr class="row-subtotal">
+                        <td colspan="4" class="text-right">SUBTOTAL</td>
                         <td class="text-right num">C$ {{ number_format($grandTotalCapital, 2) }}</td>
                         <td class="text-right num">C$ {{ number_format($grandTotalInteres, 2) }}</td>
                         <td class="text-right num">C$ {{ number_format($grandTotalGeneral, 2) }}</td>
@@ -115,16 +117,23 @@
                 <div style="text-align:center;padding:48px;color:#718096;">No se encontraron registros.</div>
             @endforelse
             @if($abonosAgrupados->count() > 0)
-            <table class="data-table" style="margin-top:4px;">
-                <tbody>
-                    <tr class="row-grand-total">
-                        <td colspan="3" class="text-right">TOTAL GENERAL</td>
-                        <td class="text-right num">C$ {{ number_format($grandTotalCapital, 2) }}</td>
-                        <td class="text-right num">C$ {{ number_format($grandTotalInteres, 2) }}</td>
-                        <td class="text-right num">C$ {{ number_format($grandTotalGeneral, 2) }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="grand-total-block">
+                <div class="gt-title">Totales Generales</div>
+                <div class="gt-grid">
+                    <div class="gt-item">
+                        <div class="gt-label">Capital</div>
+                        <div class="gt-value dark">C$ {{ number_format($grandTotalCapital, 2) }}</div>
+                    </div>
+                    <div class="gt-item">
+                        <div class="gt-label">Interés</div>
+                        <div class="gt-value dark">C$ {{ number_format($grandTotalInteres, 2) }}</div>
+                    </div>
+                    <div class="gt-item">
+                        <div class="gt-label">Total Recuperado</div>
+                        <div class="gt-value" style="color:#15803d;">C$ {{ number_format($grandTotalGeneral, 2) }}</div>
+                    </div>
+                </div>
+            </div>
             @endif
         @endif
 

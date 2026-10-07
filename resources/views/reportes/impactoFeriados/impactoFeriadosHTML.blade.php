@@ -40,7 +40,9 @@
 
     <div class="report-wrapper wide">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Análisis de Impacto de Feriados</div>
             <div class="rpt-meta">Generado: {{ date('d/m/Y') }} &nbsp;|&nbsp; {{ date('h:i A') }}</div>
@@ -163,14 +165,32 @@
                 </tr>
                 @endforeach
             </tbody>
+            @if(count($prestamosAfectados) > 0)
             <tfoot>
-                <tr class="row-grand-total">
-                    <td colspan="7" class="text-right"><strong>TOTALES</strong></td>
+                <tr class="row-subtotal">
+                    <td colspan="7" class="text-right">SUBTOTAL</td>
                     <td class="text-center bold">{{ array_sum(array_column($prestamosAfectados, 'total_afectadas')) }}</td>
                     <td></td>
                 </tr>
             </tfoot>
+            @endif
         </table>
+
+        @if(count($prestamosAfectados) > 0)
+        <div class="grand-total-block">
+            <div class="gt-title">Total Cuotas Afectadas</div>
+            <div class="gt-grid">
+                <div class="gt-item">
+                    <div class="gt-label">Préstamos Afectados</div>
+                    <div class="gt-value dark">{{ count($prestamosAfectados) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Cuotas Afectadas</div>
+                    <div class="gt-value">{{ array_sum(array_column($prestamosAfectados, 'total_afectadas')) }}</div>
+                </div>
+            </div>
+        </div>
+        @endif
 
 
 

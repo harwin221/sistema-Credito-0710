@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-12 col-md-4 mb-3">
                         <label for="sc_estado"><strong>Estado del Préstamo:</strong></label>
-                        {{html()->select('estado', ['0'=>'Todos','1'=>'Pendientes / Activos','2'=>'Cancelados','3'=>'Vencidos','4'=>'Anulados','5'=>'Saneados'], '0')->class('form-control')->id('sc_estado')}}
+                        {{html()->select('estado', ['0'=>'Todos','1'=>'Pendientes / Activos','2'=>'Cancelados','3'=>'Vencidos','4'=>'Anulados','5'=>'Saneados'], '1')->class('form-control')->id('sc_estado')}}
                     </div>
                     <div class="col-12 col-md-4 mb-3">
                         <label for="sc_fecha_fin"><strong>Fecha de Corte:</strong></label>

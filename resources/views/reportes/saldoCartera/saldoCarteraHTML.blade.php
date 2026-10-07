@@ -6,7 +6,33 @@
     <link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/vendor/fontawesome-free-6.4.0-web/css/all.min.css')}}" rel="stylesheet">
     @include('reportes._corporate_styles')
-    <style>@page { size: landscape; margin: 1cm; }</style>
+    <style>
+        @page { size: landscape; margin: 1cm; }
+        /* Tablas del reporte: layout fijo para que los nombres largos no desalineen las columnas */
+        .data-table.resumen-table, .data-table.detalle-table { table-layout: fixed; }
+        .data-table td, .data-table th { overflow-wrap: anywhere; word-break: break-word; }
+        /* Vista resumida: anchos de columna definidos */
+        .data-table.resumen-table th:nth-child(1), .data-table.resumen-table td:nth-child(1) { width: 40px; }
+        .data-table.resumen-table th:nth-child(2), .data-table.resumen-table td:nth-child(2) { width: 34%; }
+        .data-table.resumen-table th:nth-child(3), .data-table.resumen-table td:nth-child(3) { width: 10%; }
+        .data-table.resumen-table th:nth-child(4), .data-table.resumen-table td:nth-child(4),
+        .data-table.resumen-table th:nth-child(5), .data-table.resumen-table td:nth-child(5),
+        .data-table.resumen-table th:nth-child(6), .data-table.resumen-table td:nth-child(6) { width: 15.5%; }
+        .data-table.resumen-table .num { font-size: 10.5px; white-space: nowrap; }
+        /* Vista detallada: anchos de columna definidos (10 columnas) */
+        .data-table.detalle-table th:nth-child(1), .data-table.detalle-table td:nth-child(1) { width: 34px; }
+        .data-table.detalle-table th:nth-child(2), .data-table.detalle-table td:nth-child(2) { width: 8%; }
+        .data-table.detalle-table th:nth-child(3), .data-table.detalle-table td:nth-child(3) { width: 20%; }
+        .data-table.detalle-table th:nth-child(4), .data-table.detalle-table td:nth-child(4),
+        .data-table.detalle-table th:nth-child(5), .data-table.detalle-table td:nth-child(5),
+        .data-table.detalle-table th:nth-child(6), .data-table.detalle-table td:nth-child(6) { width: 9%; }
+        .data-table.detalle-table th:nth-child(7), .data-table.detalle-table td:nth-child(7) { width: 9%; }
+        .data-table.detalle-table th:nth-child(8), .data-table.detalle-table td:nth-child(8),
+        .data-table.detalle-table th:nth-child(9), .data-table.detalle-table td:nth-child(9),
+        .data-table.detalle-table th:nth-child(10), .data-table.detalle-table td:nth-child(10) { width: 10.5%; }
+        .data-table.detalle-table .num { font-size: 10.5px; white-space: nowrap; }
+        .subtotal-table th, .subtotal-table td { font-size: 10.5px; }
+    </style>
 </head>
 <body>
     <div class="screen-actions no-print">
@@ -26,7 +52,9 @@
 
     <div class="report-wrapper wide">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Saldo de Cartera &mdash; Vista {{ strtoupper($tipo_vista) }}</div>
             <div class="rpt-meta">Generado: {{ date('d/m/Y') }} &nbsp;|&nbsp; {{ date('h:i A') }}</div>
@@ -37,7 +65,7 @@
                 $totClientes = 0; $totCapital = 0; $totInteres = 0; $totTotal = 0;
                 foreach($resumen as $r) { $totClientes += $r->clientes; $totCapital += $r->capital; $totInteres += $r->interes; $totTotal += $r->total; }
             @endphp
-            <table class="data-table">
+            <table class="data-table resumen-table">
                 <thead>
                     <tr>
                         <th>#</th><th>Cobrador / Agente</th>
@@ -62,8 +90,8 @@
                 </tbody>
                 @if(count($resumen) > 0)
                 <tfoot>
-                    <tr class="row-grand-total">
-                        <td colspan="2" class="text-right">TOTAL GENERAL</td>
+                    <tr class="row-subtotal">
+                        <td colspan="2" class="text-right">SUBTOTAL</td>
                         <td class="text-right">{{ $totClientes }}</td>
                         <td class="text-right num">C$ {{ number_format($totCapital, 2) }}</td>
                         <td class="text-right num">C$ {{ number_format($totInteres, 2) }}</td>
@@ -72,6 +100,26 @@
                 </tfoot>
                 @endif
             </table>
+
+            @if(count($resumen) > 0)
+            <div class="grand-total-block">
+                <div class="gt-title">Totales Generales &mdash; {{ $totClientes }} cliente{{ $totClientes != 1 ? 's' : '' }}</div>
+                <div class="gt-grid">
+                    <div class="gt-item">
+                        <div class="gt-label">Capital</div>
+                        <div class="gt-value dark">C$ {{ number_format($totCapital, 2) }}</div>
+                    </div>
+                    <div class="gt-item">
+                        <div class="gt-label">Interés</div>
+                        <div class="gt-value dark">C$ {{ number_format($totInteres, 2) }}</div>
+                    </div>
+                    <div class="gt-item">
+                        <div class="gt-label">Total</div>
+                        <div class="gt-value">C$ {{ number_format($totTotal, 2) }}</div>
+                    </div>
+                </div>
+            </div>
+            @endif
         @else
             @php
                 $totalClientes=0; $totalCapitalPend=0; $totalInteresPend=0; $totalMontoPend=0;
@@ -89,15 +137,13 @@
                 @endphp
 
                 @if($cambioAgente)
-                    <table class="data-table" style="margin-bottom:0;">
+                    <table class="data-table subtotal-table" style="margin-bottom:0;">
                         <tbody>
                             <tr class="row-subtotal">
-                                <td colspan="3" class="text-right">Subtotal {{ strtoupper($nombreCobradorActual) }} &mdash; {{ $subClientes }} clientes</td>
-                                <td colspan="3"></td>
+                                <td colspan="7" class="text-right">Subtotal {{ strtoupper($nombreCobradorActual) }} &mdash; {{ $subClientes }} clientes</td>
                                 <td class="text-right num">C$ {{ number_format($subCapital, 2) }}</td>
                                 <td class="text-right num">C$ {{ number_format($subInteres, 2) }}</td>
                                 <td class="text-right num">C$ {{ number_format($subTotal, 2) }}</td>
-                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -106,7 +152,7 @@
 
                 @if($cobradorActual != $prestamo->agente_id)
                     <div class="section-title">Cobrador: {{ strtoupper($prestamo->agente_nombre ?? 'SIN ASIGNAR') }}</div>
-                    <table class="data-table">
+                    <table class="data-table detalle-table">
                         <thead>
                             <tr>
                                 <th>#</th><th>N° Préstamo</th><th>Cliente</th>
@@ -141,15 +187,13 @@
                 @if($loop->last)
                         </tbody>
                     </table>
-                    <table class="data-table" style="margin-bottom:0;">
+                    <table class="data-table subtotal-table" style="margin-bottom:0;">
                         <tbody>
                             <tr class="row-subtotal">
-                                <td colspan="3" class="text-right">Subtotal {{ strtoupper($nombreCobradorActual) }} &mdash; {{ $subClientes }} clientes</td>
-                                <td colspan="3"></td>
+                                <td colspan="7" class="text-right">Subtotal {{ strtoupper($nombreCobradorActual) }} &mdash; {{ $subClientes }} clientes</td>
                                 <td class="text-right num">C$ {{ number_format($subCapital, 2) }}</td>
                                 <td class="text-right num">C$ {{ number_format($subInteres, 2) }}</td>
                                 <td class="text-right num">C$ {{ number_format($subTotal, 2) }}</td>
-                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -159,18 +203,23 @@
             @endforelse
 
             @if(count($prestamos) > 0)
-            <table class="data-table" style="margin-top:4px;">
-                <tbody>
-                    <tr class="row-grand-total">
-                        <td colspan="3" class="text-right">TOTAL GENERAL &mdash; {{ $totalClientes }} clientes</td>
-                        <td colspan="3"></td>
-                        <td class="text-right num">C$ {{ number_format($totalCapitalPend, 2) }}</td>
-                        <td class="text-right num">C$ {{ number_format($totalInteresPend, 2) }}</td>
-                        <td class="text-right num">C$ {{ number_format($totalMontoPend, 2) }}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="grand-total-block">
+                <div class="gt-title">Totales Generales &mdash; {{ $totalClientes }} cliente{{ $totalClientes != 1 ? 's' : '' }}</div>
+                <div class="gt-grid">
+                    <div class="gt-item">
+                        <div class="gt-label">Capital Pendiente</div>
+                        <div class="gt-value dark">C$ {{ number_format($totalCapitalPend, 2) }}</div>
+                    </div>
+                    <div class="gt-item">
+                        <div class="gt-label">Interés Pendiente</div>
+                        <div class="gt-value dark">C$ {{ number_format($totalInteresPend, 2) }}</div>
+                    </div>
+                    <div class="gt-item">
+                        <div class="gt-label">Total Pendiente</div>
+                        <div class="gt-value">C$ {{ number_format($totalMontoPend, 2) }}</div>
+                    </div>
+                </div>
+            </div>
             @endif
         @endif
 

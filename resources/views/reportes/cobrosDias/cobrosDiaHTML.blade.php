@@ -20,7 +20,9 @@
     </div>
     <div class="report-wrapper">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Cobros del Día</div>
             <div class="rpt-meta">Generado: {{ date('d/m/Y') }} &nbsp;|&nbsp; {{ date('h:i A') }}</div>
@@ -69,16 +71,36 @@
             </tbody>
             @if(count($prestamoCuotas) > 0)
             <tfoot>
-                <tr class="row-grand-total">
-                    <td colspan="7" class="text-right">TOTAL GENERAL &mdash; {{ count($prestamoCuotas) }} registro{{ count($prestamoCuotas) != 1 ? 's' : '' }}</td>
+                <tr class="row-subtotal">
+                    <td colspan="7" class="text-right">SUBTOTAL</td>
                     <td class="text-right num">C$ {{ number_format($totalCuota, 2) }}</td>
                     <td class="text-right num">C$ {{ number_format($totalAbonado, 2) }}</td>
-                    <td class="text-right num" style="color:#fca5a5;">C$ {{ number_format($totalPendiente, 2) }}</td>
+                    <td class="text-right num" style="color:#b91c1c;">C$ {{ number_format($totalPendiente, 2) }}</td>
                     <td></td>
                 </tr>
             </tfoot>
             @endif
         </table>
+
+        @if(count($prestamoCuotas) > 0)
+        <div class="grand-total-block">
+            <div class="gt-title">Totales Generales &mdash; {{ count($prestamoCuotas) }} registro{{ count($prestamoCuotas) != 1 ? 's' : '' }}</div>
+            <div class="gt-grid">
+                <div class="gt-item">
+                    <div class="gt-label">Monto Cuota</div>
+                    <div class="gt-value dark">C$ {{ number_format($totalCuota, 2) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Abonado</div>
+                    <div class="gt-value" style="color:#15803d;">C$ {{ number_format($totalAbonado, 2) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Pendiente</div>
+                    <div class="gt-value" style="color:#b91c1c;">C$ {{ number_format($totalPendiente, 2) }}</div>
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="rpt-footer">Documento generado por CrediNica &mdash; {{ date('d/m/Y h:i A') }} &mdash; Uso interno exclusivo</div>
     </div>
     <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

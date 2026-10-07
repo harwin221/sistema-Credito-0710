@@ -30,7 +30,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label for="estado"><strong>Estado del Préstamo:</strong></label>
-                {{html()->select('estado',['0'=>'Todos','1'=>'Pendientes / Activos','2'=>'Cancelados','3'=>'Vencidos','4'=>'Anulados','5'=>'Saneados'],request('estado'))->class('form-control')->id('estado')}}
+                {{html()->select('estado',['0'=>'Todos','1'=>'Pendientes / Activos','2'=>'Cancelados','3'=>'Vencidos','4'=>'Anulados','5'=>'Saneados'],request('estado', '1'))->class('form-control')->id('estado')}}
             </div>
         </div>
     </div>

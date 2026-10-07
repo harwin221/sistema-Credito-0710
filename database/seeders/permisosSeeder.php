@@ -380,6 +380,53 @@ class permisosSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
+        Permission::create([
+            'name' => 'Detalle Colocacion V2 (9)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Cobranza (10)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Saldo Cartera (11)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Estado Clientes (12)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Estado Cuenta Cliente (13)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Plan de Pago (14)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Antiguedad de Saldos (15)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
+
+        Permission::create([
+            'name' => 'Cartera Diaria (16)',
+            'description' => 'Reportes',
+            'guard_name' => 'web',
+        ]);
 
         //
     }

@@ -8,50 +8,58 @@
 
     /* ─── ENCABEZADO CORPORATIVO ─── */
     .rpt-header {
+        position: relative;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        padding: 18px 32px 14px;
+        justify-content: center;
+        text-align: center;
+        padding: 18px 150px;
+        min-height: 118px;
         border-bottom: 3px solid #1f9cb5;
         background: #fff;
-        gap: 20px;
     }
+    /* El logo va fijo a la izquierda y NO empuja el contenido */
     .rpt-header .logo-col {
-        flex-shrink: 0;
-        width: 110px;
+        position: absolute;
+        left: 32px;
+        top: 50%;
+        transform: translateY(-50%);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
     }
-    .rpt-header .logo-col img {
-        height: 52px;
+    .rpt-header .logo-col img,
+    .rpt-header > img {
+        height: 96px;
         width: auto;
+        display: block;
     }
     .rpt-header .logo-col .tagline { display: none; }
+    /* El contenido ocupa todo el ancho y se centra respecto al reporte */
     .rpt-header .title-col {
-        flex: 1;
+        width: 100%;
         text-align: center;
     }
     .rpt-header .co-name { display: none; }
     .rpt-header .rpt-title {
-        font-size: 11px;
-        font-weight: 600;
-        color: #4a5568;
-        margin-top: 5px;
+        font-size: 19px;
+        font-weight: 700;
+        color: #1a1a2e;
+        text-align: center;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        border-top: 1px solid #e2e8f0;
-        padding-top: 5px;
-        margin-top: 6px;
+        letter-spacing: 2px;
     }
     .rpt-header .rpt-meta {
-        font-size: 10px;
-        color: #94a3b8;
-        margin-top: 4px;
+        font-size: 11px;
+        color: #64748b;
+        text-align: center;
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #e2e8f0;
     }
     .rpt-header .info-col {
-        flex-shrink: 0;
-        width: 150px;
-        text-align: right;
+        text-align: center;
         font-size: 10px;
         color: #64748b;
         line-height: 1.6;
@@ -62,8 +70,9 @@
     }
 
     /* ─── BARRA FILTROS ─── */
-    .filters-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; padding: 9px 40px; background: #f7f8fa; border-bottom: 1px solid #e2e8f0; font-size: 11px; color: #4a5568; }
+    .filters-bar { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px 34px; padding: 11px 40px; background: #f7f8fa; border-bottom: 1px solid #e2e8f0; font-size: 11px; color: #4a5568; text-align: center; }
     .filters-bar span { font-weight: 600; color: #1a1a2e; }
+    .filters-bar .filters-title { font-weight: 700; color: #1f9cb5; text-transform: uppercase; letter-spacing: 0.8px; }
 
     /* ─── SECCIÓN COBRADOR ─── */
     .section-title {

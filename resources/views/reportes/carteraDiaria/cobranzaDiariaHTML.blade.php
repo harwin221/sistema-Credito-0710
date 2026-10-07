@@ -26,7 +26,9 @@
 
     <div class="report-wrapper wide">
         <div class="rpt-header">
-            <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            <div class="logo-col">
+                <img src="{{asset('assets/img/LogoCrediNica.png')}}" alt="CrediNica">
+            </div>
             <div class="co-name">CrediNica</div>
             <div class="rpt-title">Reporte de Cartera Diaria</div>
             <div class="rpt-meta">Fecha del reporte: {{ fecha_d_m_Y($fechaReporte) }} &nbsp;|&nbsp; Generado: {{ date('d/m/Y h:i A') }}</div>
@@ -216,21 +218,23 @@
         </table>
 
         {{-- ─── RESUMEN GENERAL ─── --}}
-        <table class="data-table" style="margin-top:8px;">
-            <tbody>
-                <tr class="row-grand-total">
-                    <td class="text-right" style="width:50%;">
-                        RESUMEN &mdash; Día: {{ $cuotasDia->count() }} &nbsp;|&nbsp; Mora: {{ $cuotasMora->count() }} &nbsp;|&nbsp; Vencidos: {{ $cuotasVencidas->count() }}
-                    </td>
-                    <td class="text-right num" style="width:25%;">
-                        Saldo total cartera: C$ {{ number_format(($tPend1 ?? 0) + ($tPend2 ?? 0) + ($tPend3 ?? 0), 2) }}
-                    </td>
-                    <td class="text-right num" style="width:25%;">
-                        Atraso (Día+Mora): C$ {{ number_format(($tAtraso1 ?? 0) + ($tAtraso2 ?? 0), 2) }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="grand-total-block">
+            <div class="gt-title">Resumen General</div>
+            <div class="gt-grid">
+                <div class="gt-item">
+                    <div class="gt-label">Día / Mora / Vencidos</div>
+                    <div class="gt-value dark">{{ $cuotasDia->count() }} / {{ $cuotasMora->count() }} / {{ $cuotasVencidas->count() }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Saldo Total Cartera</div>
+                    <div class="gt-value">C$ {{ number_format(($tPend1 ?? 0) + ($tPend2 ?? 0) + ($tPend3 ?? 0), 2) }}</div>
+                </div>
+                <div class="gt-item">
+                    <div class="gt-label">Atraso (Día + Mora)</div>
+                    <div class="gt-value" style="color:#b91c1c;">C$ {{ number_format(($tAtraso1 ?? 0) + ($tAtraso2 ?? 0), 2) }}</div>
+                </div>
+            </div>
+        </div>
 
         <div class="rpt-footer">Documento generado por CrediNica &mdash; {{ date('d/m/Y h:i A') }} &mdash; Uso interno exclusivo</div>
     </div>
